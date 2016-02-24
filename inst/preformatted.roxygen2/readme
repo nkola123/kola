@@ -1,0 +1,6 @@
+## KLUDGE \preformatted gets messed up by roxygen2
+## using inst/preformatted.sh to work around.
+## This requires each instance of \preformatted 
+## in the R/*.R files to start and end with a line 
+## containing only:
+#'
