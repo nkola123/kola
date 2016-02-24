@@ -2,5 +2,7 @@
 .*\.tar\.gz
 .*\.Rcheck
 Makefile
+README.md
+TODO.md
 configure
 tmp_.*

@@ -23,7 +23,7 @@ version of the area under curve of the receiver operating characteristic.
 \seealso{
   \code{help(package="HandTill2001")}, especially \code{"\link[=auc-methods]{methods?auc}"};
   various packages that calculate two class AUC (\code{"\link[ROCR:performance]{ROCR}"})
-  or multiple class AUC (\code{"\link[pROC:pROC-package]{pROC}"}, \code{"\link[caTools:caTools-package]{caTools}"}).
+  or multiple class AUC (pROC, \code{"\link[caTools:caTools-package]{caTools}"}).
 }
 \examples{
 library(HandTill2001)

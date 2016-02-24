@@ -4,7 +4,8 @@
 # I can't keep the R CMD stuff, and I'm used  to 'make', so I wrap R CMDs into
 # make.
 
-rpackage=$( basename $(pwd)) 
+R=~/svn/R/r-devel/build/bin/R
+rpackage=$(basename $(pwd)) 
 rpversion=$(grep 'Version:' DESCRIPTION |cut -f2 -d' ')
 
 check_meta_info_script=tmp_check_meta_info.sh
@@ -74,49 +75,45 @@ for (code_file in list.files(file.path(".", "R"), full.names = TRUE)) {
 EOF
 
 cat > Makefile <<EOF
+R=${R}
 rpackage=${rpackage}
 rpversion=${rpversion}
 check_meta_info_script=$check_meta_info_script
 package_tools=${package_tools}
 EOF
 cat >> Makefile <<\EOF
-roxy_code=tmp_roxy.r
 
 all: craninstall clean
 full: crancheck install clean
 craninstall: crancheck
-	R --vanilla CMD INSTALL  ${rpackage}_${rpversion}.tar.gz
+	${R} --vanilla CMD INSTALL  ${rpackage}_${rpversion}.tar.gz
 crancheck: check 
 	export _R_CHECK_FORCE_SUGGESTS_=FALSE && \
-        R CMD check --as-cran ${rpackage}_${rpversion}.tar.gz 
+        ${R} CMD check --as-cran ${rpackage}_${rpversion}.tar.gz 
 install: check 
-	R --vanilla CMD INSTALL  ${rpackage}_${rpversion}.tar.gz && \
+	${R} --vanilla CMD INSTALL  ${rpackage}_${rpversion}.tar.gz && \
         printf '===== have you run\n\tmake check_demo && ' && \
         printf 'make package_tools && make runit && make coldr\n?!\n' 
 install_bare: build_bare 
-	R --vanilla CMD INSTALL  ${rpackage}_${rpversion}.tar.gz 
+	${R} --vanilla CMD INSTALL  ${rpackage}_${rpversion}.tar.gz 
 check_bare: build_bare 
 	export _R_CHECK_FORCE_SUGGESTS_=FALSE && \
-        R --vanilla CMD check --no-examples ${rpackage}_${rpversion}.tar.gz && \
+        ${R} --vanilla CMD check --no-examples ${rpackage}_${rpversion}.tar.gz && \
         printf '===== run\n\tmake install\n!!\n'
 check: build 
 	export _R_CHECK_FORCE_SUGGESTS_=FALSE && \
-        R --vanilla CMD check ${rpackage}_${rpversion}.tar.gz && \
+        ${R} --vanilla CMD check ${rpackage}_${rpversion}.tar.gz && \
         printf '===== run\n\tmake install\n!!\n'
 build_bare: 
-	R --vanilla CMD build ../${rpackage}
+	${R} --vanilla CMD build ../${rpackage}
 build: check_meta_info
-	R --vanilla CMD build ../${rpackage}
-check_meta_info: roxy
+	${R} --vanilla CMD build ../${rpackage}
+check_meta_info: 
 	./${check_meta_info_script}
 direct_check:  
-	R --vanilla CMD check ../${rpackage} ## check without build -- not recommended
-roxy:
-	rm man/* || true
-	printf "library('roxygen2')\nroxygen2::roxygenize('.', roclets = c('rd'))\n" > ${roxy_code}
-	R --vanilla CMD BATCH --vanilla ${roxy_code}
+	${R} --vanilla CMD check ../${rpackage} ## check without build -- not recommended
 check_demo:
-	# R CMD BATCH  demo/${rpackage}.r ## Rscript doesn't load
+	# ${R} CMD BATCH  demo/${rpackage}.r ## Rscript doesn't load
 	# methods, but we fixed that.
 	demo/${rpackage}.r
 runit:
@@ -134,5 +131,5 @@ clean:
 clean_git:
 	git clean -x -f -d
 remove:
-	 R --vanilla CMD REMOVE  ${rpackage}
+	 ${R} --vanilla CMD REMOVE  ${rpackage}
 EOF
