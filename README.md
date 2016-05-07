@@ -1,9 +1,7 @@
 # HandTill2001
 
 This is an R package to create area under ROC curve for multiple classes
-following David J. Hand and Robert J. Till (2001). A Simple Generalisation of
-    the Area Under the ROC Curve for Multiple Class Classification Problems.
-    Machine Learning, 45 (2), p. 171--186.  DOI:10.1023/A:1010920819831.
+following David J. Hand and Robert J. Till (2001) <DOI:10.1023/A:1010920819831>.
 
 In R, try:
 ```R
