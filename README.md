@@ -1,7 +1,9 @@
 # HandTill2001
 
 This is an R package to create area under ROC curve for multiple classes
-following David J. Hand and Robert J. Till (2001) <DOI:10.1023/A:1010920819831>.
+following David J. Hand and Robert J. Till (2001) 
+[DOI:10.1023/A:1010920819831](http://dx.doi.org/DOI:10.1023/A:1010920819831 
+"David J. Hand and Robert J. Till (2001)").
 
 In R, try:
 ```R
