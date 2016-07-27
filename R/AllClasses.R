@@ -64,8 +64,6 @@ setClass(Class = "multcap"
 	     return("response and predicted must have the same number of observations.")
 	   if(any(p < 0, na.rm = TRUE) || any(p > 1, na.rm = TRUE))
 	     return("probabilities should be in [0,1].")
-	   if(! isTRUE(all.equal(rep(1,nrow(p)) ,as.numeric(rowSums(p, na.rm = TRUE)))))
-	     return("row sums of predicted must be 1.")
 	 }
 	 )
 
